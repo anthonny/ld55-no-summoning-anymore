@@ -89,11 +89,6 @@ jobs:
       - name: Itch.io Web deploy
         run: |
           butler push ./build/web $ITCHIO_TARGET:win-linux-mac
-      # - name: Deploy to GitHub Pages 🚀
-      #   uses: JamesIves/github-pages-deploy-action@releases/v4
-      #   with:
-      #     branch: gh-pages # The branch the action should deploy to.
-      #     folder: build/web # The folder the action should deploy.
 
   # export-mac:
   #   name: Mac Export
