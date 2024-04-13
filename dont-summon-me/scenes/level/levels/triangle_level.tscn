@@ -4,17 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://btq3txhm2jwj8" path="res://scenes/point/point.tscn" id="2_panq6"]
 
 [node name="Level" instance=ExtResource("1_lsiqk")]
+point_scene = ExtResource("2_panq6")
 metadata/_edit_horizontal_guides_ = [222.0, 127.0]
 metadata/_edit_vertical_guides_ = [320.0, 483.0, 159.0]
 
 [node name="CollisionPolygon2D" parent="." index="1"]
 visible = false
 
-[node name="Point" parent="." index="2" instance=ExtResource("2_panq6")]
+[node name="Marker2D" type="Marker2D" parent="." index="2"]
+position = Vector2(320, 127)
+
+[node name="Marker2D2" type="Marker2D" parent="." index="3"]
 position = Vector2(159, 222)
 
-[node name="Point2" parent="." index="3" instance=ExtResource("2_panq6")]
+[node name="Marker2D3" type="Marker2D" parent="." index="4"]
 position = Vector2(483, 222)
-
-[node name="Point3" parent="." index="4" instance=ExtResource("2_panq6")]
-position = Vector2(320, 127)

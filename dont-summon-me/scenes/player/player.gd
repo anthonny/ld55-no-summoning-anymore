@@ -1,7 +1,6 @@
 extends Area2D
 
-
-enum PLAYER_STATE {STANDING, DASHING, JUMPING}
+enum STATES {STANDING, DASHING, JUMPING}
 enum ACTIONS {TICK, STAND, DASH, JUMP}
 
 @export var dash_speed: float = 1500.0
@@ -16,7 +15,7 @@ var state = {}
 func _ready():
 	state = {
 		"delta": 0.0,
-		"player_state": PLAYER_STATE.STANDING,
+		"player_state": STATES.STANDING,
 		"targeted_position": position,
 		"current_direction": Vector2(0, 0)
 	}
@@ -28,26 +27,35 @@ func _physics_process(delta):
 
 
 func update(action: ACTIONS, state):
+	if (action != ACTIONS.TICK):
+		print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state])])
 	match [action, state.player_state]:
-		[ACTIONS.STAND, PLAYER_STATE.DASHING]:
-			print("ACTIONS.STAND, PLAYER_STATE.DASHING")
-			state.player_state = PLAYER_STATE.STANDING
+		[ACTIONS.STAND, STATES.DASHING]:
+			state.player_state = STATES.STANDING
 			return state
-		[ACTIONS.DASH, PLAYER_STATE.STANDING]:
-			print("ACTIONS.DASH, PLAYER_STATE.STANDING")
+		[ACTIONS.DASH, STATES.STANDING]:
 			return handle_dash_action(state)
-		[ACTIONS.TICK, PLAYER_STATE.DASHING]:
-			print("ACTIONS.TICK, PLAYER_STATE.DASHING")
-			return handle_dashing(state)
-		[ACTIONS.TICK, PLAYER_STATE.STANDING]:
-			if (Input.is_action_just_pressed("dash")):
-				print("ACTIONS.TICK, PLAYER_STATE.STANDING: dash")
-				state = update(ACTIONS.DASH, state)
+		[ACTIONS.JUMP, ..]:
 			return state
+			#return handle_dash_action(state)
+		[ACTIONS.TICK, STATES.DASHING]:
+			return handle_dashing(state)
+		[ACTIONS.TICK, STATES.STANDING]:
+			return handle_tick(state)
+		[ACTIONS.TICK, STATES.DASHING]:
+			return handle_tick(state)
 		_:
-			print_debug("Unsupported transition", str(ACTIONS.keys()[action]), str(PLAYER_STATE.keys()[state.player_state]))
+			print_debug("Unsupported transition", str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state]))
 			return state
 
+func handle_tick(state):
+	if (Input.is_action_just_pressed("dash")):
+		print("handle_tick: dash")
+		state = update(ACTIONS.DASH, state)
+	if (Input.is_action_just_pressed("jump")):
+		print("handle_tick: jump")
+		state = update(ACTIONS.JUMP, state)
+	return state
 
 func handle_dashing(state):
 	var velocity = state.current_direction * dash_speed
@@ -66,10 +74,10 @@ func handle_dash_action(state):
 
 	#print("current_direction", current_direction.length())
 	if (state.current_direction.length() < 16.0):
-		state.player_state = PLAYER_STATE.STANDING
+		state.player_state = STATES.STANDING
 		return state
 
-	state.player_state = PLAYER_STATE.DASHING
+	state.player_state = STATES.DASHING
 	state.current_direction = state.current_direction.normalized()
 	dash_timer.start()
 	return state
