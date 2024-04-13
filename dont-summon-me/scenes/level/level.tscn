@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://72gcm5osw8xv"]
+
+[ext_resource type="Script" path="res://scenes/level/level.gd" id="1_1amgo"]
+[ext_resource type="Texture2D" uid="uid://dquks0uynq4nj" path="res://assets/ground/ground.png" id="1_ua0fl"]
+
+[node name="Level" type="Area2D"]
+script = ExtResource("1_1amgo")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 640.0
+offset_bottom = 380.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("1_ua0fl")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+polygon = PackedVector2Array(138, 113, 109, 262, 532, 264, 502, 113, 536, 113, 565, 289, 75, 288, 88, 113)
