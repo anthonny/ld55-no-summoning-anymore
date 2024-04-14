@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://btq3txhm2jwj8"]
+[gd_scene load_steps=25 format=3 uid="uid://btq3txhm2jwj8"]
 
 [ext_resource type="Script" path="res://scenes/point/point.gd" id="1_q2ucg"]
 [ext_resource type="Texture2D" uid="uid://bgt4yllec7j32" path="res://assets/point/point-appears.png" id="2_eflps"]
@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://s33ou2skdagj" path="res://assets/point/point-locked.png" id="9_e0onh"]
 [ext_resource type="AudioStream" uid="uid://5lfelc6j87y0" path="res://assets/sounds/validate_point_2.wav" id="10_rue1h"]
 [ext_resource type="AudioStream" uid="uid://cn202l4gl0o8n" path="res://assets/sounds/locked.wav" id="11_twtnt"]
+[ext_resource type="AudioStream" uid="uid://bg3xe078h1i64" path="res://assets/sounds/portal.wav" id="12_c0eb8"]
+[ext_resource type="AudioStream" uid="uid://dymqbeic07cy5" path="res://assets/sounds/portal-open.wav" id="13_63gky"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xeuwj"]
 radius = 5.0
@@ -398,6 +400,12 @@ stream = ExtResource("10_rue1h")
 
 [node name="LockedPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("11_twtnt")
+
+[node name="PortalPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("12_c0eb8")
+
+[node name="PortalOpenPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_63gky")
 
 [connection signal="timeout" from="SequenceTimer" to="." method="_on_sequence_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

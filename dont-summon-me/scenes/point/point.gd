@@ -14,6 +14,8 @@ signal validated
 @onready var animation_player = $AnimationPlayer
 @onready var validate_player = $Sounds/ValidatePlayer
 @onready var locked_player = $Sounds/LockedPlayer
+@onready var portal_player = $Sounds/PortalPlayer
+@onready var portal_open_player = $Sounds/PortalOpenPlayer
 
 var state = {}
 
@@ -47,6 +49,7 @@ func update(action: ACTIONS, state):
 			return state
 		[ACTIONS.RUN_STEP_1, STATES.IDLE_STEP_1]:
 			state.point_state = STATES.STEP_1
+			portal_player.play()
 			animation_player.play("first_step")
 			return state
 		[ACTIONS.DELAY_RUN_STEP_2, STATES.STEP_1]:
@@ -55,6 +58,7 @@ func update(action: ACTIONS, state):
 			return state
 		[ACTIONS.RUN_STEP_2, STATES.IDLE_STEP_2]:
 			state.point_state = STATES.STEP_2
+			portal_player.play()
 			animation_player.play("second_step")
 			return state
 		[ACTIONS.DELAY_RUN_STEP_3, STATES.STEP_2]:
@@ -63,6 +67,7 @@ func update(action: ACTIONS, state):
 			return state
 		[ACTIONS.RUN_STEP_3, STATES.IDLE_STEP_3]:
 			state.point_state = STATES.STEP_3
+			portal_player.play()
 			animation_player.play("third_step")
 			return state
 		[ACTIONS.DELAY_RUN_STEP_4, STATES.STEP_3]:
@@ -71,6 +76,7 @@ func update(action: ACTIONS, state):
 			return state
 		[ACTIONS.RUN_STEP_4, STATES.IDLE_STEP_4]:
 			state.point_state = STATES.STEP_4
+			portal_open_player.play()
 			animation_player.play("fourth_step")
 			return state
 		[ACTIONS.RUN_ACTIVE, STATES.STEP_4]:
