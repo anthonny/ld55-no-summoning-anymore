@@ -12,6 +12,8 @@ signal validated
 
 @onready var sequence_timer = $SequenceTimer
 @onready var animation_player = $AnimationPlayer
+@onready var validate_player = $Sounds/ValidatePlayer
+@onready var locked_player = $Sounds/LockedPlayer
 
 var state = {}
 
@@ -80,11 +82,13 @@ func update(action: ACTIONS, state):
 		[ACTIONS.EVALUATE_RESULT, STATES.ACTIVE]:
 			state.point_state = STATES.LOCKED
 			animation_player.play("locked")
+			locked_player.play()
 			locked.emit()
 			return state
 		[ACTIONS.VALIDATE, STATES.ACTIVE]:
 			state.point_state = STATES.VALIDATED
 			animation_player.play("validated")
+			validate_player.play()
 			validated.emit()
 			return state
 		_:

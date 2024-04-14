@@ -21,3 +21,5 @@ texture = ExtResource("1_ua0fl")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 build_mode = 1
 polygon = PackedVector2Array(138, 113, 109, 262, 532, 264, 502, 113, 536, 113, 565, 289, 75, 288, 88, 113)
+
+[node name="Markers" type="Node" parent="."]

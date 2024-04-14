@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bc5ru62cegeoe"]
+[gd_scene load_steps=27 format=3 uid="uid://bc5ru62cegeoe"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8ekt6"]
 [ext_resource type="Texture2D" uid="uid://buyhxfjkigymk" path="res://assets/character/character-prepare_left_dash.png" id="2_p78x4"]
@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://bb5rvtow2d2me" path="res://assets/character/character-right_dash_recovery.png" id="8_ujlim"]
 [ext_resource type="Texture2D" uid="uid://drr30t6iuutex" path="res://assets/character/character-jump.png" id="9_6dvsu"]
 [ext_resource type="Texture2D" uid="uid://bt6p6mapo6nku" path="res://assets/character/character-jump_recovery.png" id="10_gatvn"]
+[ext_resource type="AudioStream" uid="uid://b0dn0ik7b0kb7" path="res://assets/sounds/dash_2.wav" id="11_lov37"]
+[ext_resource type="AudioStream" uid="uid://bji6hajalu32f" path="res://assets/sounds/jump_light.wav" id="12_pryqa"]
+[ext_resource type="AudioStream" uid="uid://caqkudgjyq1s5" path="res://assets/sounds/explosion.wav" id="13_hqbj5"]
+[ext_resource type="AudioStream" uid="uid://b55ck8rrfvxim" path="res://assets/sounds/explosion_fail.wav" id="14_v0hpc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0yvef"]
 radius = 9.0
@@ -430,6 +434,21 @@ libraries = {
 "": SubResource("AnimationLibrary_gd55j")
 }
 autoplay = "idle"
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="DashPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("11_lov37")
+volume_db = -8.666
+
+[node name="JumpPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("12_pryqa")
+
+[node name="ExplosionPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("13_hqbj5")
+
+[node name="ExplosionFailPlayer" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("14_v0hpc")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

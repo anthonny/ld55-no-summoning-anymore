@@ -18,8 +18,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = ExtResource("1_inctd")
 
-[node name="Triangle" parent="." node_paths=PackedStringArray("points") instance=ExtResource("2_eals5")]
-points = [null, null, null]
+[node name="Triangle" parent="." instance=ExtResource("2_eals5")]
 
 [node name="Player" parent="." instance=ExtResource("2_x670j")]
 position = Vector2(322, 182)

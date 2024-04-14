@@ -7,6 +7,12 @@ enum ACTIONS {TICK, STAND, DASH, JUMP, JUMP_RECOVERY}
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
 
+@onready var dash_player = $Sounds/DashPlayer
+@onready var jump_player = $Sounds/JumpPlayer
+@onready var explosion_player = $Sounds/ExplosionPlayer
+@onready var explosion_fail_player = $Sounds/ExplosionFailPlayer
+
+
 var state = {}
 
 # Called when the node enters the scene tree for the first time.
@@ -42,11 +48,13 @@ func update(action: ACTIONS, state):
 			return handle_dash_action(state)
 		[ACTIONS.DASH, STATES.PREPARE_LEFT_DASHING]:
 			animation_player.play("left_dash")
+			dash_player.play()
 			state.player_state = STATES.LEFT_DASHING
 			state.current_direction = state.current_direction.normalized()
 			return state
 		[ACTIONS.DASH, STATES.PREPARE_RIGHT_DASHING]:
 			animation_player.play("right_dash")
+			dash_player.play()
 			state.player_state = STATES.RIGHT_DASHING
 			state.current_direction = state.current_direction.normalized()
 			return state
@@ -70,14 +78,17 @@ func update(action: ACTIONS, state):
 			return state
 		[ACTIONS.JUMP, STATES.STANDING]:
 			animation_player.play("jump")
+			jump_player.play()
 			state.player_state = STATES.JUMPING
 			return state
 		[ACTIONS.JUMP, STATES.RECOVER_LEFT_DASHING]:
 			animation_player.play("jump")
+			jump_player.play()
 			state.player_state = STATES.JUMPING
 			return state
 		[ACTIONS.JUMP, STATES.RECOVER_RIGHT_DASHING]:
 			animation_player.play("jump")
+			jump_player.play()
 			state.player_state = STATES.JUMPING
 			return state
 		[ACTIONS.JUMP_RECOVERY, STATES.JUMPING]:
@@ -155,12 +166,20 @@ func handle_dash_action(state):
 	return state
 
 func handle_jump_recovery(state):
+	var has_hit_point=false
 	animation_player.play("recover_jump")
+
 	state.player_state = STATES.RECOVER_JUMPING
 	if (has_overlapping_areas()):
 		for area in get_overlapping_areas():
 			if (area.has_method("validate")):
+				has_hit_point = true
 				area.validate()
+
+	#if !has_hit_point:
+		#explosion_fail_player.play()
+	#else:
+		#explosion_player.play()
 
 	return state
 
