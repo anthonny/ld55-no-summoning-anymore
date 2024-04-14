@@ -4,6 +4,7 @@ enum STATES {STANDING, DASHING, JUMPING}
 enum ACTIONS {TICK, STAND, DASH, JUMP}
 
 @export var dash_speed: float = 1500.0
+@onready var animation_player = $AnimationPlayer
 
 var state = {}
 
@@ -72,23 +73,48 @@ func handle_dash_action(state):
 	state.targeted_position = gmp
 	state.current_direction = state.targeted_position - position
 
-	#print("current_direction", current_direction.length())
 	if (state.current_direction.length() < 16.0):
 		state.player_state = STATES.STANDING
 		return state
+
+	if state.current_direction.x <= 0:
+		animation_player.play("prepare_left_dash")
+	else:
+		animation_player.play("prepare_right_dash")
+	return state
+
+
+func handle_execute_dash_action(state):
+
+	print(state.current_direction.x)
+	if state.current_direction.x <= 0:
+		animation_player.play("left_dash")
+	else:
+		animation_player.play("right_dash")
 
 	state.player_state = STATES.DASHING
 	state.current_direction = state.current_direction.normalized()
 	dash_timer.start()
 	return state
 
+
 func _on_dash_timeout() -> void:
 	state = update(ACTIONS.STAND, state)
+	animation_player.play("idle")
+
+#func _on_area_entered(area):
+	#state = update(ACTIONS.STAND, state)
 
 
-func _on_body_entered(body):
-	print("collide")
-
-
-func _on_area_entered(area):
-	state = update(ACTIONS.STAND, state)
+func _on_animation_finished(anim_name):
+	match anim_name:
+		"prepare_left_dash":
+			handle_execute_dash_action(state)
+		"prepare_right_dash":
+			handle_execute_dash_action(state)
+		"left_dash":
+			animation_player.play("left_dash_recovery")
+		"right_dash":
+			animation_player.play("right_dash_recovery")
+		_:
+			return
