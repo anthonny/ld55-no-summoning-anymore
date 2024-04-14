@@ -34,6 +34,10 @@ func update(action: ACTIONS, state):
 		[ACTIONS.STAND, STATES.RIGHT_DASHING]:
 			state.player_state = STATES.STANDING
 			return state
+		[ACTIONS.STAND, STATES.JUMPING]:
+			animation_player.play("idle")
+			state.player_state = STATES.STANDING
+			return state
 		[ACTIONS.DASH, STATES.STANDING]:
 			return handle_dash_action(state)
 		[ACTIONS.DASH, STATES.PREPARE_LEFT_DASHING]:
@@ -62,6 +66,18 @@ func update(action: ACTIONS, state):
 			state.player_state = STATES.STANDING
 			animation_player.play("idle")
 			return state
+		[ACTIONS.JUMP, STATES.STANDING]:
+			animation_player.play("jump")
+			state.player_state = STATES.JUMPING
+			return state
+		[ACTIONS.JUMP, STATES.RECOVER_LEFT_DASHING]:
+			animation_player.play("jump")
+			state.player_state = STATES.JUMPING
+			return state
+		[ACTIONS.JUMP, STATES.RECOVER_RIGHT_DASHING]:
+			animation_player.play("jump")
+			state.player_state = STATES.JUMPING
+			return state
 		[ACTIONS.JUMP, ..]:
 			return state
 			#return handle_dash_action(state)
@@ -80,9 +96,9 @@ func update(action: ACTIONS, state):
 		[ACTIONS.TICK, STATES.PREPARE_RIGHT_DASHING]:
 			return state
 		[ACTIONS.TICK, STATES.RECOVER_LEFT_DASHING]:
-			return state
+			return handle_tick(state)
 		[ACTIONS.TICK, STATES.RECOVER_RIGHT_DASHING]:
-			return state
+			return handle_tick(state)
 		_:
 			print_debug("Unsupported transition", str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state]))
 			return state
@@ -140,4 +156,6 @@ func _on_animation_finished(anim_name):
 		state = update(ACTIONS.DASH, state)
 	if (anim_name.begins_with("recover_")):
 		state = update(ACTIONS.DASH, state)
+	if (anim_name =="jump"):
+		state = update(ACTIONS.STAND, state)
 
