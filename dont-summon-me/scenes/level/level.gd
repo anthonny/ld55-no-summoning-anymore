@@ -15,11 +15,19 @@ func _ready():
 	points = [marker_2d, marker_2d_2, marker_2d_3]
 	for point_index in len(points):
 		var new_point = point_scene.instantiate()
-		new_point.delay = (point_index + 1) * 1.5
-		#new_point.interval = (point_index + 1) * 1
+		new_point.pop_delay = (point_index + 1) * 1.5
 		new_point.position = points[point_index].position
+		new_point.validated.connect(_on_point_validated)
+		new_point.locked.connect(_on_point_locked)
 		add_child(new_point)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func _on_point_validated():
+	print("Level - point validated")
+
+func _on_point_locked():
+	print("Level - point locked")

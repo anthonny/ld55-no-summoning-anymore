@@ -1,7 +1,7 @@
 extends Area2D
 
-enum STATES {STANDING, PREPARE_LEFT_DASHING, LEFT_DASHING, RECOVER_LEFT_DASHING,PREPARE_RIGHT_DASHING, RIGHT_DASHING, RECOVER_RIGHT_DASHING, JUMPING}
-enum ACTIONS {TICK, STAND, DASH, JUMP}
+enum STATES {STANDING, PREPARE_LEFT_DASHING, LEFT_DASHING, RECOVER_LEFT_DASHING,PREPARE_RIGHT_DASHING, RIGHT_DASHING, RECOVER_RIGHT_DASHING, JUMPING, RECOVER_JUMPING}
+enum ACTIONS {TICK, STAND, DASH, JUMP, JUMP_RECOVERY}
 
 @export var dash_speed: float = 1500.0
 @onready var animation_player = $AnimationPlayer
@@ -34,7 +34,7 @@ func update(action: ACTIONS, state):
 		[ACTIONS.STAND, STATES.RIGHT_DASHING]:
 			state.player_state = STATES.STANDING
 			return state
-		[ACTIONS.STAND, STATES.JUMPING]:
+		[ACTIONS.STAND, STATES.RECOVER_JUMPING]:
 			animation_player.play("idle")
 			state.player_state = STATES.STANDING
 			return state
@@ -50,6 +50,8 @@ func update(action: ACTIONS, state):
 			state.player_state = STATES.RIGHT_DASHING
 			state.current_direction = state.current_direction.normalized()
 			return state
+		[ACTIONS.DASH, STATES.RECOVER_JUMPING]:
+			return handle_dash_action(state)
 		[ACTIONS.DASH, STATES.LEFT_DASHING]:
 			state.player_state = STATES.RECOVER_LEFT_DASHING
 			animation_player.play("recover_left_dash")
@@ -78,6 +80,8 @@ func update(action: ACTIONS, state):
 			animation_player.play("jump")
 			state.player_state = STATES.JUMPING
 			return state
+		[ACTIONS.JUMP_RECOVERY, STATES.JUMPING]:
+			return handle_jump_recovery(state)
 		[ACTIONS.JUMP, ..]:
 			return state
 			#return handle_dash_action(state)
@@ -98,6 +102,10 @@ func update(action: ACTIONS, state):
 		[ACTIONS.TICK, STATES.RECOVER_LEFT_DASHING]:
 			return handle_tick(state)
 		[ACTIONS.TICK, STATES.RECOVER_RIGHT_DASHING]:
+			return handle_tick(state)
+		[ACTIONS.TICK, STATES.JUMPING]:
+			return state
+		[ACTIONS.TICK, STATES.RECOVER_JUMPING]:
 			return handle_tick(state)
 		_:
 			print_debug("Unsupported transition", str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state]))
@@ -146,16 +154,27 @@ func handle_dash_action(state):
 
 	return state
 
+func handle_jump_recovery(state):
+	animation_player.play("recover_jump")
+	state.player_state = STATES.RECOVER_JUMPING
+	if (has_overlapping_areas()):
+		for area in get_overlapping_areas():
+			if (area.has_method("validate")):
+				area.validate()
 
-#func _on_area_entered(area):
-	#state = update(ACTIONS.STAND, state)
+	return state
+
+func _on_area_entered(area):
+	print(area)
 
 
 func _on_animation_finished(anim_name):
 	if (anim_name.begins_with("prepare_")):
 		state = update(ACTIONS.DASH, state)
-	if (anim_name.begins_with("recover_")):
+	if (anim_name.begins_with("recover_left_dash") || anim_name.begins_with("recover_right_dash")):
 		state = update(ACTIONS.DASH, state)
 	if (anim_name =="jump"):
+		state = update(ACTIONS.JUMP_RECOVERY, state)
+	if (anim_name =="recover_jump"):
 		state = update(ACTIONS.STAND, state)
 

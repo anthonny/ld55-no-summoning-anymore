@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bc5ru62cegeoe"]
+[gd_scene load_steps=23 format=3 uid="uid://bc5ru62cegeoe"]
 
 [ext_resource type="Script" path="res://scenes/player/player.gd" id="1_8ekt6"]
 [ext_resource type="Texture2D" uid="uid://buyhxfjkigymk" path="res://assets/character/character-prepare_left_dash.png" id="2_p78x4"]
@@ -9,10 +9,26 @@
 [ext_resource type="Texture2D" uid="uid://cjyv8fpfmp46v" path="res://assets/character/character-right_dash.png" id="7_r3wv2"]
 [ext_resource type="Texture2D" uid="uid://bb5rvtow2d2me" path="res://assets/character/character-right_dash_recovery.png" id="8_ujlim"]
 [ext_resource type="Texture2D" uid="uid://drr30t6iuutex" path="res://assets/character/character-jump.png" id="9_6dvsu"]
+[ext_resource type="Texture2D" uid="uid://bt6p6mapo6nku" path="res://assets/character/character-jump_recovery.png" id="10_gatvn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0yvef"]
 radius = 9.0
 height = 28.0
+
+[sub_resource type="Animation" id="Animation_ksm48"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_51foq"]
 resource_name = "idle"
@@ -55,15 +71,81 @@ tracks/2/keys = {
 "values": [0, 1]
 }
 
-[sub_resource type="Animation" id="Animation_ksm48"]
-length = 0.001
+[sub_resource type="Animation" id="Animation_rfrq7"]
+resource_name = "jump"
+length = 0.5
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("9_6dvsu")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_kftnv"]
+resource_name = "left_dash"
+length = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_lg7sf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
@@ -111,46 +193,6 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_kftnv"]
-resource_name = "left_dash"
-length = 0.01
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("4_lg7sf")]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:hframes")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [1]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="Animation" id="Animation_coipl"]
 resource_name = "prepare_right_dash"
 length = 0.25
@@ -192,9 +234,10 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_5n73e"]
-resource_name = "right_dash"
-length = 0.01
+[sub_resource type="Animation" id="Animation_we70e"]
+resource_name = "recover_jump"
+length = 0.12
+step = 0.02
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -205,7 +248,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("7_r3wv2")]
+"values": [ExtResource("10_gatvn")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -217,7 +260,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [2]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -226,10 +269,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [0]
+"values": [0, 1]
 }
 
 [sub_resource type="Animation" id="Animation_ueqhj"]
@@ -314,10 +357,9 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_rfrq7"]
-resource_name = "jump"
-length = 0.72
-step = 0.05
+[sub_resource type="Animation" id="Animation_5n73e"]
+resource_name = "right_dash"
+length = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -328,7 +370,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("9_6dvsu")]
+"values": [ExtResource("7_r3wv2")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -340,7 +382,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [10]
+"values": [1]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -349,10 +391,10 @@ tracks/2/path = NodePath("Sprite2D:frame")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.45, 0.7),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gd55j"]
@@ -363,6 +405,7 @@ _data = {
 "left_dash": SubResource("Animation_kftnv"),
 "prepare_left_dash": SubResource("Animation_8rvaj"),
 "prepare_right_dash": SubResource("Animation_coipl"),
+"recover_jump": SubResource("Animation_we70e"),
 "recover_left_dash": SubResource("Animation_ueqhj"),
 "recover_right_dash": SubResource("Animation_nffoj"),
 "right_dash": SubResource("Animation_5n73e")
@@ -374,8 +417,8 @@ script = ExtResource("1_8ekt6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -40)
-texture = ExtResource("9_6dvsu")
-hframes = 10
+texture = ExtResource("10_gatvn")
+hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -3)
