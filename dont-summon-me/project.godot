@@ -2,10 +2,14 @@ config_version=5
 
 [application]
 
-config/name="no-summoning-anymore"
+config/name="no-more-summoning"
 run/main_scene="res://scenes/game/game.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*res://singletons/game_manager.gd"
 
 [display]
 

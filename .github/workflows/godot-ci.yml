@@ -3,8 +3,8 @@ on: push
 
 env:
   GODOT_VERSION: 4.2.1
-  EXPORT_NAME: no-summoning-anymore
-  PROJECT_PATH: no-summoning-anymore
+  EXPORT_NAME: no-more-summoning
+  PROJECT_PATH: no-more-summoning
   BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
   ITCHIO_TARGET: ${{ vars.ITCHIO_USERNAME }}/${{ vars.ITCHIO_GAME }}
 
