@@ -29,8 +29,8 @@ func _process(delta):
 	state = update(ACTIONS.TICK, state)
 
 func update(action: ACTIONS, state):
-	if (action != ACTIONS.TICK):
-		print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.point_state])])
+	#if (action != ACTIONS.TICK):
+		#print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.point_state])])
 	match [action, state.point_state]:
 		[ACTIONS.APPEARS, STATES.HIDDEN]:
 			state.point_state = STATES.APPEARING

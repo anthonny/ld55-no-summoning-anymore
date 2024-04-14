@@ -1,16 +1,13 @@
 extends Area2D
 
-enum STATES {STANDING, DASHING, JUMPING}
+enum STATES {STANDING, PREPARE_LEFT_DASHING, LEFT_DASHING, RECOVER_LEFT_DASHING,PREPARE_RIGHT_DASHING, RIGHT_DASHING, RECOVER_RIGHT_DASHING, JUMPING}
 enum ACTIONS {TICK, STAND, DASH, JUMP}
 
 @export var dash_speed: float = 1500.0
 @onready var animation_player = $AnimationPlayer
-
-var state = {}
-
-@onready var dash_timer = $DashTimer
 @onready var sprite_2d = $Sprite2D
 
+var state = {}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -31,20 +28,61 @@ func update(action: ACTIONS, state):
 	if (action != ACTIONS.TICK):
 		print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state])])
 	match [action, state.player_state]:
-		[ACTIONS.STAND, STATES.DASHING]:
+		[ACTIONS.STAND, STATES.LEFT_DASHING]:
+			state.player_state = STATES.STANDING
+			return state
+		[ACTIONS.STAND, STATES.RIGHT_DASHING]:
 			state.player_state = STATES.STANDING
 			return state
 		[ACTIONS.DASH, STATES.STANDING]:
 			return handle_dash_action(state)
+		[ACTIONS.DASH, STATES.PREPARE_LEFT_DASHING]:
+			animation_player.play("left_dash")
+			state.player_state = STATES.LEFT_DASHING
+			state.current_direction = state.current_direction.normalized()
+			return state
+		[ACTIONS.DASH, STATES.PREPARE_RIGHT_DASHING]:
+			animation_player.play("right_dash")
+			state.player_state = STATES.RIGHT_DASHING
+			state.current_direction = state.current_direction.normalized()
+			return state
+		[ACTIONS.DASH, STATES.LEFT_DASHING]:
+			state.player_state = STATES.RECOVER_LEFT_DASHING
+			animation_player.play("recover_left_dash")
+			return state
+		[ACTIONS.DASH, STATES.RIGHT_DASHING]:
+			state.player_state = STATES.RECOVER_RIGHT_DASHING
+			animation_player.play("recover_right_dash")
+			return state
+		[ACTIONS.DASH, STATES.RECOVER_LEFT_DASHING]:
+			state.player_state = STATES.STANDING
+			animation_player.play("idle")
+			return state
+		[ACTIONS.DASH, STATES.RECOVER_RIGHT_DASHING]:
+			state.player_state = STATES.STANDING
+			animation_player.play("idle")
+			return state
 		[ACTIONS.JUMP, ..]:
 			return state
 			#return handle_dash_action(state)
-		[ACTIONS.TICK, STATES.DASHING]:
+		[ACTIONS.TICK, STATES.LEFT_DASHING]:
+			return handle_dashing(state)
+		[ACTIONS.TICK, STATES.RIGHT_DASHING]:
 			return handle_dashing(state)
 		[ACTIONS.TICK, STATES.STANDING]:
 			return handle_tick(state)
-		[ACTIONS.TICK, STATES.DASHING]:
+		[ACTIONS.TICK, STATES.LEFT_DASHING]:
 			return handle_tick(state)
+		[ACTIONS.TICK, STATES.RIGHT_DASHING]:
+			return handle_tick(state)
+		[ACTIONS.TICK, STATES.PREPARE_LEFT_DASHING]:
+			return state
+		[ACTIONS.TICK, STATES.PREPARE_RIGHT_DASHING]:
+			return state
+		[ACTIONS.TICK, STATES.RECOVER_LEFT_DASHING]:
+			return state
+		[ACTIONS.TICK, STATES.RECOVER_RIGHT_DASHING]:
+			return state
 		_:
 			print_debug("Unsupported transition", str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state]))
 			return state
@@ -65,6 +103,12 @@ func handle_dashing(state):
 		position = new_position
 	else:
 		position = state.targeted_position
+		if (state.player_state == STATES.LEFT_DASHING):
+			state.player_state = STATES.RECOVER_LEFT_DASHING
+			animation_player.play("recover_left_dash")
+		elif (state.player_state == STATES.RIGHT_DASHING):
+			state.player_state = STATES.RECOVER_RIGHT_DASHING
+			animation_player.play("recover_right_dash")
 
 	return state
 
@@ -78,43 +122,22 @@ func handle_dash_action(state):
 		return state
 
 	if state.current_direction.x <= 0:
+		state.player_state = STATES.PREPARE_LEFT_DASHING
 		animation_player.play("prepare_left_dash")
 	else:
+		state.player_state = STATES.PREPARE_RIGHT_DASHING
 		animation_player.play("prepare_right_dash")
+
 	return state
 
-
-func handle_execute_dash_action(state):
-
-	print(state.current_direction.x)
-	if state.current_direction.x <= 0:
-		animation_player.play("left_dash")
-	else:
-		animation_player.play("right_dash")
-
-	state.player_state = STATES.DASHING
-	state.current_direction = state.current_direction.normalized()
-	dash_timer.start()
-	return state
-
-
-func _on_dash_timeout() -> void:
-	state = update(ACTIONS.STAND, state)
-	animation_player.play("idle")
 
 #func _on_area_entered(area):
 	#state = update(ACTIONS.STAND, state)
 
 
 func _on_animation_finished(anim_name):
-	match anim_name:
-		"prepare_left_dash":
-			handle_execute_dash_action(state)
-		"prepare_right_dash":
-			handle_execute_dash_action(state)
-		"left_dash":
-			animation_player.play("left_dash_recovery")
-		"right_dash":
-			animation_player.play("right_dash_recovery")
-		_:
-			return
+	if (anim_name.begins_with("prepare_")):
+		state = update(ACTIONS.DASH, state)
+	if (anim_name.begins_with("recover_")):
+		state = update(ACTIONS.DASH, state)
+
