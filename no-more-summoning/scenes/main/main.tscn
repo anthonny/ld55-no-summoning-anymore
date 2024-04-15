@@ -99,9 +99,13 @@ position = Vector2(462, 303)
 
 [node name="PlayerHolder" type="Node" parent="."]
 
-[node name="Player" parent="." instance=ExtResource("6_aylql")]
+[node name="Player" parent="." node_paths=PackedStringArray("top_left_limit", "top_right_limit", "bottom_left_limit", "bottom_right_limit") instance=ExtResource("6_aylql")]
 z_index = 1
 position = Vector2(319, 264)
+top_left_limit = NodePath("../MarkerLimitsHolder/MarkerTopLeft")
+top_right_limit = NodePath("../MarkerLimitsHolder/MarkerTopRight")
+bottom_left_limit = NodePath("../MarkerLimitsHolder/MarkerBottomLeft")
+bottom_right_limit = NodePath("../MarkerLimitsHolder/MarkerBottomRight")
 
 [node name="ResetTimer" type="Timer" parent="."]
 wait_time = 1.5
@@ -121,6 +125,20 @@ horizontal_alignment = 1
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 2.0
 one_shot = true
+
+[node name="MarkerLimitsHolder" type="Node" parent="."]
+
+[node name="MarkerTopLeft" type="Marker2D" parent="MarkerLimitsHolder"]
+position = Vector2(125, 196)
+
+[node name="MarkerBottomLeft" type="Marker2D" parent="MarkerLimitsHolder"]
+position = Vector2(123, 337)
+
+[node name="MarkerTopRight" type="Marker2D" parent="MarkerLimitsHolder"]
+position = Vector2(511, 192)
+
+[node name="MarkerBottomRight" type="Marker2D" parent="MarkerLimitsHolder"]
+position = Vector2(521, 337)
 
 [connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

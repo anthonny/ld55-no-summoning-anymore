@@ -3,6 +3,11 @@ extends Area2D
 enum STATES {STANDING, PREPARE_LEFT_DASHING, LEFT_DASHING, RECOVER_LEFT_DASHING,PREPARE_RIGHT_DASHING, RIGHT_DASHING, RECOVER_RIGHT_DASHING, JUMPING, RECOVER_JUMPING}
 enum ACTIONS {TICK, STAND, DASH, JUMP, JUMP_RECOVERY}
 
+@export var top_left_limit: Marker2D
+@export var top_right_limit: Marker2D
+@export var bottom_left_limit: Marker2D
+@export var bottom_right_limit: Marker2D
+
 @export var dash_speed: float = 1500.0
 @onready var animation_player = $AnimationPlayer
 @onready var sprite_2d = $Sprite2D
@@ -149,7 +154,25 @@ func handle_dashing(state):
 
 func handle_dash_action(state):
 	var gmp = get_global_mouse_position()
-	state.targeted_position = gmp
+	var raw_direction = gmp - position
+	var clamped_x
+	var clamped_y
+	if raw_direction.x <= 0:
+		clamped_x = clampf(gmp.x, top_left_limit.position.x, position.x)
+	else:
+		clamped_x = clampf(gmp.x, position.x, top_right_limit.position.x)
+
+	if raw_direction.y <= 0:
+		clamped_y = clampf(gmp.y, top_left_limit.position.y, position.y)
+	else:
+		clamped_y = clampf(gmp.y, position.y, bottom_left_limit.position.y)
+
+	var target_position = Vector2(clamped_x,clamped_y)
+
+
+
+
+	state.targeted_position = target_position #gmp
 	state.current_direction = state.targeted_position - position
 
 	if (state.current_direction.length() <= 0):
