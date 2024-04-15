@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://flkjmreolqg8"]
+
+[ext_resource type="PackedScene" uid="uid://72gcm5osw8xv" path="res://scenes/level/level.tscn" id="1_ecbh5"]
+[ext_resource type="PackedScene" uid="uid://btq3txhm2jwj8" path="res://scenes/point/point.tscn" id="2_muwt3"]
+[ext_resource type="Texture2D" uid="uid://cx6jbn2q3ou7b" path="res://assets/levels/level-2/level-line-diag-right.png" id="3_l38kx"]
+
+[node name="LevelDiagRight" instance=ExtResource("1_ecbh5")]
+point_scene = ExtResource("2_muwt3")
+
+[node name="LevelTextureRect" parent="." index="1"]
+texture = ExtResource("3_l38kx")
+
+[node name="Marker2D" type="Marker2D" parent="Markers" index="0"]
+position = Vector2(441, 142)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" index="1"]
+position = Vector2(188, 237)

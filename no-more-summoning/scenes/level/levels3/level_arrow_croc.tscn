@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfqrhrdb12oqy"]
+
+[ext_resource type="PackedScene" uid="uid://72gcm5osw8xv" path="res://scenes/level/level.tscn" id="1_vxgml"]
+[ext_resource type="PackedScene" uid="uid://btq3txhm2jwj8" path="res://scenes/point/point.tscn" id="2_irubn"]
+[ext_resource type="Texture2D" uid="uid://ps027ud0rqui" path="res://assets/levels/level-3/level-arrow-croc.png" id="3_xv17f"]
+
+[node name="LevelArrowCroc" instance=ExtResource("1_vxgml")]
+point_scene = ExtResource("2_irubn")
+
+[node name="LevelTextureRect" parent="." index="1"]
+texture = ExtResource("3_xv17f")
+
+[node name="Marker2D" type="Marker2D" parent="Markers" index="0"]
+position = Vector2(426, 138)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" index="1"]
+position = Vector2(147, 169)
+
+[node name="Marker2D3" type="Marker2D" parent="Markers" index="2"]
+position = Vector2(408, 248)

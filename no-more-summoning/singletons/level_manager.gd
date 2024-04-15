@@ -77,14 +77,17 @@ func get_next_level():
 	var next_level = _levels.pick_random()
 	if not next_level:
 		print("Not next level")
-	elif len(_levels) > 1:
-		_levels = _levels.filter(func(name): return name != next_level)
-		#if (len(levels) == 0):
-			#_level_index += 1
-			#load_levels(_level_index)
 
 	print("%s/levels%s/%s" % [LEVEL_BASE_PATH, _level_index, next_level])
-	return load("%s/levels%s/%s" % [LEVEL_BASE_PATH, _level_index, next_level])
+	var level_scene = load("%s/levels%s/%s" % [LEVEL_BASE_PATH, _level_index, next_level])
+
+	if len(_levels) > 0:
+		_levels = _levels.filter(func(name): return name != next_level)
+		if (len(_levels) == 0):
+			_level_index += 1
+			load_levels(_level_index)
+
+	return level_scene
 
 func get_scores():
 	return {

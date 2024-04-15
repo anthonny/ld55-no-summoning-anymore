@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ky7o3rggxp3m"
-path="res://.godot/imported/level-lune.png-ddfbe305fb22114a1dda0a9a5962616a.ctex"
+uid="uid://cx6jbn2q3ou7b"
+path="res://.godot/imported/level-line-diag-right.png-bf21702cd56b0f3749087bae27e5de09.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/levels/level-2/level-lune/level-lune.png"
-dest_files=["res://.godot/imported/level-lune.png-ddfbe305fb22114a1dda0a9a5962616a.ctex"]
+source_file="res://assets/levels/level-2/level-line-diag-right.png"
+dest_files=["res://.godot/imported/level-line-diag-right.png-bf21702cd56b0f3749087bae27e5de09.ctex"]
 
 [params]
 

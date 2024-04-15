@@ -3,8 +3,6 @@ extends Node
 enum STATES {DISPLAYING_MAIN, DISPLAYING_GAME, DISPLAYING_PAUSE}
 enum ACTIONS {DISPLAY_GAME, DISPLAY_MAIN}
 
-const TRIANGLE_LEVEL = preload("res://scenes/level/levels/triangle_level.tscn")
-
 const MAIN = preload("res://scenes/main/main.tscn")
 const GAME = preload("res://scenes/game/game.tscn")
 

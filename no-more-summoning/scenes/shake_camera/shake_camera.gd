@@ -33,7 +33,6 @@ func update(action: ACTIONS, state):
 			state.camera_state = STATES.SHAKING
 			return state
 		[ACTIONS.TICK, STATES.SHAKING]:
-			print(_shake_strength)
 			if (int(_shake_strength) <= 0):
 				state.camera_state = STATES.IDLE
 			else:

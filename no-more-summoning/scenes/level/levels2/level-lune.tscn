@@ -1,10 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctw0pbc4ki432"]
 
 [ext_resource type="PackedScene" uid="uid://72gcm5osw8xv" path="res://scenes/level/level.tscn" id="1_l2l20"]
-[ext_resource type="Texture2D" uid="uid://ky7o3rggxp3m" path="res://assets/levels/level-2/level-lune/level-lune.png" id="2_ebesb"]
+[ext_resource type="Texture2D" uid="uid://ky7o3rggxp3m" path="res://assets/levels/level-2/level-lune.png" id="2_ebesb"]
 [ext_resource type="PackedScene" uid="uid://btq3txhm2jwj8" path="res://scenes/point/point.tscn" id="2_rnmse"]
 
-[node name="Level" instance=ExtResource("1_l2l20")]
+[node name="LevelLune" instance=ExtResource("1_l2l20")]
 point_scene = ExtResource("2_rnmse")
 
 [node name="LevelTextureRect" parent="." index="1"]
