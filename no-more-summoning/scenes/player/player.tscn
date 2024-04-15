@@ -420,12 +420,11 @@ position = Vector2(305, 189)
 script = ExtResource("1_8ekt6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -40)
+position = Vector2(0, -38)
 texture = ExtResource("2_xuk56")
 hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_0yvef")
 

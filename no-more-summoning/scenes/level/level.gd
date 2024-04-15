@@ -1,11 +1,14 @@
-extends Area2D
+extends Node2D
 class_name Level
 
 enum STATES {IDLE, WON, SEMI_VICTORY, LOST}
 enum ACTIONS {TICK, VALIDATE_POINT, LOCK_POINT, FINISH}
 
 @export var point_scene: PackedScene
-@export var delay_level_finished: float = 1.5
+@export var delay_until_level_finished: float = 1.5
+@export var delay_until_points_start: float = 2.0
+@export var delay_between_points_steps: float = 2.0
+@export var delay_until_point_lock: float = 2.0
 
 @onready var markers = $Markers
 @onready var level_finished_timer = $LevelFinishedTimer
@@ -21,7 +24,7 @@ func _ready():
 		"nb_points": len(markers.get_children())
 	}
 
-	level_finished_timer.wait_time = delay_level_finished
+	level_finished_timer.wait_time = delay_until_level_finished
 
 	if not point_scene:
 		printerr("No point scene associated")
@@ -36,10 +39,14 @@ func _ready():
 		var pop_delay_index = pop_delays.pick_random()
 		pop_delays = pop_delays.filter(func(a): return a != pop_delay_index)
 		var new_point = point_scene.instantiate()
-		new_point.pop_delay = (pop_delay_index + 1) * 1.5
+
+		new_point.delay_until_pop = (pop_delay_index + 0.1) * delay_until_points_start
+		new_point.delay_between_steps = delay_between_points_steps
+		new_point.delay_until_locked = delay_until_point_lock
 		new_point.position = marker.position
 		new_point.validated.connect(_on_point_validated)
 		new_point.locked.connect(_on_point_locked)
+
 		add_child(new_point)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -2,15 +2,20 @@ extends Node
 
 const SCORES_PATH = "user://scores.json"
 const LEVEL_BASE_PATH: String = "res://scenes/level"
+const MAX_LEVEL: int = 7
 
 signal scores_updated
 
-var _delay_between_points_start: float = 1.0
-var _delay_between_points_step: float = 1.0
-var _duration_point_active: float = 1.0
+var _delay_until_level_finished: float = 0.3 #1.5
+var _delay_until_points_start: float = 0.5 # 1.0
+var _delay_between_points_steps: float =  0.3 # 1.0
+var _delay_until_point_lock: float = 0.9 #1.5
+
 var _level_index: int = 2
+var _all_levels = []
 var _levels = []
 var _score = 0
+
 var _scores: Dictionary = {}
 
 
@@ -48,14 +53,23 @@ func _handle_level_lost():
 	_add_to_score(-100)
 	SignalManager.level_changed.emit()
 
-func load_levels(level: int):
-	var dir = DirAccess.open("%s/levels%s" % [LEVEL_BASE_PATH, level])
+func load_levels(level_index: int):
+	if (level_index > MAX_LEVEL):
+		_levels = _all_levels
+
+	var dir = DirAccess.open("%s/levels%s" % [LEVEL_BASE_PATH, level_index])
 	if dir:
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
 			if !dir.current_is_dir():
-				_levels.append(file_name.replace(".remap", ""))
+				var level_name = file_name.replace(".remap", "")
+				var level = {
+					"level": level_index,
+					"name": level_name
+				}
+				_all_levels.append(level)
+				_levels.append(level)
 			file_name = dir.get_next()
 	else:
 		print("An error occurred when trying to access the path.")
@@ -78,8 +92,8 @@ func get_next_level():
 	if not next_level:
 		print("Not next level")
 
-	print("%s/levels%s/%s" % [LEVEL_BASE_PATH, _level_index, next_level])
-	var level_scene = load("%s/levels%s/%s" % [LEVEL_BASE_PATH, _level_index, next_level])
+	print("%s/levels%s/%s" % [LEVEL_BASE_PATH, next_level.level, next_level.name])
+	var level_scene = load("%s/levels%s/%s" % [LEVEL_BASE_PATH, next_level.level, next_level.name])
 
 	if len(_levels) > 0:
 		_levels = _levels.filter(func(name): return name != next_level)
@@ -93,4 +107,12 @@ func get_scores():
 	return {
 		"score": _score,
 		"high_score": _scores.high_score
+	}
+
+func get_delays():
+	return {
+		"delay_until_level_finished": _delay_until_level_finished,
+		"delay_until_points_start": _delay_until_points_start,
+		"delay_between_points_steps": _delay_between_points_steps,
+		"delay_until_point_lock": _delay_until_point_lock
 	}

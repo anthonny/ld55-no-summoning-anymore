@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://j5ltnsbre6gh"]
+
+[ext_resource type="PackedScene" uid="uid://72gcm5osw8xv" path="res://scenes/level/level.tscn" id="1_hxhkg"]
+[ext_resource type="PackedScene" uid="uid://btq3txhm2jwj8" path="res://scenes/point/point.tscn" id="2_ldnjo"]
+[ext_resource type="Texture2D" uid="uid://b5sfqoe2ndmda" path="res://assets/levels/level-6/level-6-1.png" id="3_obis3"]
+
+[node name="Level-6-1" instance=ExtResource("1_hxhkg")]
+point_scene = ExtResource("2_ldnjo")
+
+[node name="LevelTextureRect" parent="." index="1"]
+texture = ExtResource("3_obis3")
+
+[node name="Marker2D" type="Marker2D" parent="Markers" index="0"]
+position = Vector2(148, 213)
+
+[node name="Marker2D2" type="Marker2D" parent="Markers" index="1"]
+position = Vector2(320, 256)
+
+[node name="Marker2D3" type="Marker2D" parent="Markers" index="2"]
+position = Vector2(493, 213)
+
+[node name="Marker2D4" type="Marker2D" parent="Markers" index="3"]
+position = Vector2(458, 149)
+
+[node name="Marker2D5" type="Marker2D" parent="Markers" index="4"]
+position = Vector2(319, 126)
+
+[node name="Marker2D6" type="Marker2D" parent="Markers" index="5"]
+position = Vector2(183, 148)

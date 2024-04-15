@@ -3,9 +3,9 @@ extends Area2D
 enum STATES {HIDDEN, APPEARING, IDLE_STEP_1, STEP_1, IDLE_STEP_2, STEP_2, IDLE_STEP_3, STEP_3, IDLE_STEP_4, STEP_4, ACTIVE, VALIDATED, LOCKED}
 enum ACTIONS {TICK, APPEARS, DELAY_RUN_STEP_1, RUN_STEP_1, DELAY_RUN_STEP_2, RUN_STEP_2, DELAY_RUN_STEP_3, RUN_STEP_3, DELAY_RUN_STEP_4, RUN_STEP_4, RUN_ACTIVE, LOCK, VALIDATE}
 
-@export var pop_delay: float
-@export var interval: float = 0.20 #0.02
-@export var locked_delay: float = 1.0
+@export var delay_until_pop: float
+@export var delay_between_steps: float = 0.20 #0.02
+@export var delay_until_locked: float = 1.0
 
 signal locked
 signal validated
@@ -26,9 +26,9 @@ func _ready():
 		"point_state": STATES.HIDDEN,
 		"delta": 0.0
 	}
-	sequence_timer.wait_time = pop_delay
+	sequence_timer.wait_time = delay_until_pop
 	sequence_timer.start()
-	sequence_timer.wait_time = interval
+	sequence_timer.wait_time = delay_between_steps
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -82,7 +82,7 @@ func update(action: ACTIONS, state):
 		[ACTIONS.RUN_ACTIVE, STATES.STEP_4]:
 			state.point_state = STATES.ACTIVE
 			animation_player.play("active")
-			sequence_timer.wait_time = locked_delay
+			sequence_timer.wait_time = delay_until_locked
 			sequence_timer.start()
 			return state
 		[ACTIONS.LOCK, STATES.ACTIVE]:
