@@ -93,6 +93,12 @@ func update(action: ACTIONS, state):
 			locked_player.play()
 			locked.emit()
 			return state
+		[ACTIONS.VALIDATE, STATES.STEP_4]:
+			state.point_state = STATES.VALIDATED
+			animation_player.play("validated")
+			validate_player.play()
+			validated.emit()
+			return state
 		[ACTIONS.VALIDATE, STATES.ACTIVE]:
 			state.point_state = STATES.VALIDATED
 			animation_player.play("validated")

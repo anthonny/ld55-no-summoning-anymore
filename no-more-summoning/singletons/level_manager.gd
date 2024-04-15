@@ -63,6 +63,44 @@ func load_levels(level_index: int):
 	if (level_index > MAX_LEVEL):
 		_levels = _all_levels
 
+	match level_index:
+		2:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.5
+			_delay_between_points_steps = 0.5
+			_delay_until_point_lock = 1.5
+		3:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.4
+			_delay_between_points_steps = 0.5
+			_delay_until_point_lock = 1.4
+		4:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.3
+			_delay_between_points_steps = 0.5
+			_delay_until_point_lock = 1.4
+		5:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.2
+			_delay_between_points_steps = 0.5
+			_delay_until_point_lock = 1.3
+		6:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.1
+			_delay_between_points_steps = 0.4
+			_delay_until_point_lock = 1.3
+		7:
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.0
+			_delay_between_points_steps = 0.4
+			_delay_until_point_lock = 1.2
+		_:
+			_delay_until_level_finished = 0.4
+			_delay_until_points_start = 0.9
+			_delay_between_points_steps = 0.4
+			_delay_until_point_lock = 1.2
+
+
 	var dir = DirAccess.open("%s/levels%s" % [LEVEL_BASE_PATH, level_index])
 	if dir:
 		dir.list_dir_begin()
