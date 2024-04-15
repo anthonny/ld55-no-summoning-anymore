@@ -22,6 +22,7 @@ func _ready():
 	if not point_scene:
 		printerr("No point scene associated")
 	var markers = markers.get_children()
+	markers.shuffle()
 	for point_index in len(markers):
 		var new_point = point_scene.instantiate()
 		new_point.pop_delay = (point_index + 1) * 1.5
@@ -50,14 +51,18 @@ func update(action: ACTIONS, state):
 func handle_score(state):
 	if (state.validated_count == state.nb_points):
 		state.level_state = STATES.WON
+		SignalManager.level_validated.emit()
 	elif (state.validated_count + state.locked_count == state.nb_points):
 		state.level_state = STATES.LOST
+		SignalManager.level_lost.emit()
 
 	return state
 
 func _on_point_validated():
 	state = update(ACTIONS.VALIDATE_POINT, state)
+	SignalManager.point_validated.emit()
 
 func _on_point_locked():
 	state = update(ACTIONS.LOCK_POINT, state)
+	SignalManager.point_locked.emit()
 
