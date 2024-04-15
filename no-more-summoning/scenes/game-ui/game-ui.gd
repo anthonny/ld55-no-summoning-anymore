@@ -5,13 +5,13 @@ extends Control
 
 
 func _ready():
-	_handle_score_updated()
+	_handle_score_updated(0)
 	LevelManager.scores_updated.connect(_handle_score_updated)
 
 func _process(delta):
 	pass
 
-func _handle_score_updated():
+func _handle_score_updated(_score):
 	var scores = LevelManager.get_scores()
 	score_value.text = str(scores.score)
 	high_score_value.text = str(scores.high_score)

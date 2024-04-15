@@ -21,6 +21,7 @@ var _level_index: int = 2
 var _all_levels = []
 var _levels = []
 var _score = 0
+var _level_won_streak = 0
 
 var _scores: Dictionary = {}
 
@@ -47,15 +48,20 @@ func _add_to_score(score):
 	if _score > _scores.high_score:
 		_scores.high_score = _score
 		save_to_disc()
-	scores_updated.emit()
+	scores_updated.emit(score)
 
 func _handle_level_won():
+	_level_won_streak += 1
 	_add_to_score(200)
 	SignalManager.level_changed.emit()
+	SignalManager.level_won_streak.emit(_level_won_streak)
+
 func _handle_level_semi_won():
+	_level_won_streak = 0
 	SignalManager.level_changed.emit()
 
 func _handle_level_lost():
+	_level_won_streak = 0
 	_add_to_score(-100)
 	SignalManager.level_changed.emit()
 

@@ -2,11 +2,15 @@ extends Node2D
 
 @onready var level_holder = $LevelHolder
 @onready var camera_2d = $Camera2D
+@onready var scores_marker = $ScoresMarker
+
+const SCORES_LABEL = preload("res://scenes/scores_label/scores_label.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_handle_level_changed()
 	SignalManager.level_changed.connect(_handle_level_changed)
+	LevelManager.scores_updated.connect(handle_score_updated)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -30,3 +34,9 @@ func _handle_level_changed():
 
 func _handle_shake():
 	camera_2d.shake
+
+func handle_score_updated(score):
+	var scoresLabel = SCORES_LABEL.instantiate()
+	scoresLabel.value = score
+	scoresLabel.position = scores_marker.position
+	add_child(scoresLabel)
