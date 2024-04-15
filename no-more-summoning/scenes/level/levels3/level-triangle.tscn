@@ -16,10 +16,10 @@ texture = ExtResource("3_4sji0")
 visible = false
 
 [node name="Marker2D" type="Marker2D" parent="Markers" index="0" groups=["markers"]]
-position = Vector2(319, 126)
+position = Vector2(319, 135)
 
 [node name="Marker2D2" type="Marker2D" parent="Markers" index="1" groups=["markers"]]
-position = Vector2(147, 213)
+position = Vector2(147, 222)
 
 [node name="Marker2D3" type="Marker2D" parent="Markers" index="2" groups=["markers"]]
-position = Vector2(493, 213)
+position = Vector2(493, 222)

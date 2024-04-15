@@ -11,10 +11,10 @@ point_scene = ExtResource("2_mno6o")
 texture = ExtResource("3_0yup7")
 
 [node name="Marker2D" type="Marker2D" parent="Markers" index="0"]
-position = Vector2(231, 134)
+position = Vector2(231, 144)
 
 [node name="Marker2D2" type="Marker2D" parent="Markers" index="1"]
-position = Vector2(279, 254)
+position = Vector2(279, 264)
 
 [node name="Marker2D3" type="Marker2D" parent="Markers" index="2"]
-position = Vector2(504, 191)
+position = Vector2(504, 201)
