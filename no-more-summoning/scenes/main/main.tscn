@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://d3sbjty8hidwb"]
+[gd_scene load_steps=9 format=3 uid="uid://d3sbjty8hidwb"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_2cvxh"]
 [ext_resource type="Texture2D" uid="uid://bvuxup3cwsjl0" path="res://assets/background/background.png" id="2_1a1sh"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dquks0uynq4nj" path="res://assets/ground/ground.png" id="4_jkq5m"]
 [ext_resource type="LabelSettings" uid="uid://do6fyar0o5s8u" path="res://assets/upheaval_16_white.tres" id="5_ny0ms"]
 [ext_resource type="PackedScene" uid="uid://bc5ru62cegeoe" path="res://scenes/player/player.tscn" id="6_aylql"]
+[ext_resource type="AudioStream" uid="uid://bji62vlh4d7ia" path="res://assets/sounds/music.wav" id="8_oa4ne"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -27,6 +28,7 @@ grow_vertical = 2
 texture = ExtResource("2_1a1sh")
 
 [node name="Label2" type="Label" parent="."]
+layout_mode = 0
 offset_left = 125.0
 offset_top = 27.0
 offset_right = 523.0
@@ -139,6 +141,11 @@ position = Vector2(511, 192)
 
 [node name="MarkerBottomRight" type="Marker2D" parent="MarkerLimitsHolder"]
 position = Vector2(521, 337)
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_oa4ne")
+volume_db = -4.0
+autoplay = true
 
 [connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dq8niq3fjocat"]
+[gd_scene load_steps=9 format=3 uid="uid://dq8niq3fjocat"]
 
 [ext_resource type="Texture2D" uid="uid://bvuxup3cwsjl0" path="res://assets/background/background.png" id="1_inctd"]
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_u4cb3"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://btpr0lh57qlmw" path="res://scenes/shake_camera/shake_camera.tscn" id="5_2d4i7"]
 [ext_resource type="PackedScene" uid="uid://bmwkn6fdt10jh" path="res://scenes/congrats_label/congrats_label.tscn" id="6_cpnao"]
 [ext_resource type="LabelSettings" uid="uid://dvxcvch4pxyfs" path="res://assets/upheaval_24_white.tres" id="7_dno5m"]
+[ext_resource type="AudioStream" uid="uid://bji62vlh4d7ia" path="res://assets/sounds/music.wav" id="8_xtnnr"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_u4cb3")
@@ -72,3 +73,8 @@ theme_override_constants/margin_top = 32
 [node name="CongratsLabel" parent="CanvasLayer2/MarginContainer" instance=ExtResource("6_cpnao")]
 layout_mode = 2
 label_settings = ExtResource("7_dno5m")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_xtnnr")
+volume_db = -12.0
+autoplay = true
