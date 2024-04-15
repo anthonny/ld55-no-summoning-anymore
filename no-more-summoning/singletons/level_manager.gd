@@ -6,10 +6,16 @@ const MAX_LEVEL: int = 7
 
 signal scores_updated
 
-var _delay_until_level_finished: float = 0.3 #1.5
-var _delay_until_points_start: float = 0.5 # 1.0
-var _delay_between_points_steps: float =  0.3 # 1.0
-var _delay_until_point_lock: float = 0.9 #1.5
+## A BIT HARD
+#var _delay_until_level_finished: float = 0.3
+#var _delay_until_points_start: float = 0.5
+#var _delay_between_points_steps: float =  0.3
+#var _delay_until_point_lock: float = 1.0
+
+var _delay_until_level_finished: float = 1.0 #1.5
+var _delay_until_points_start: float = 1.5 # 1.0
+var _delay_between_points_steps: float = 0.5 # 1.0
+var _delay_until_point_lock: float = 1.5 #1.5
 
 var _level_index: int = 2
 var _all_levels = []

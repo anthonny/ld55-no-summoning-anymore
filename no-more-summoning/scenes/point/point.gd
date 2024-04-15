@@ -4,11 +4,12 @@ enum STATES {HIDDEN, APPEARING, IDLE_STEP_1, STEP_1, IDLE_STEP_2, STEP_2, IDLE_S
 enum ACTIONS {TICK, APPEARS, DELAY_RUN_STEP_1, RUN_STEP_1, DELAY_RUN_STEP_2, RUN_STEP_2, DELAY_RUN_STEP_3, RUN_STEP_3, DELAY_RUN_STEP_4, RUN_STEP_4, RUN_ACTIVE, LOCK, VALIDATE}
 
 @export var delay_until_pop: float
-@export var delay_between_steps: float = 0.20 #0.02
+@export var delay_between_steps: float = 0.20
 @export var delay_until_locked: float = 1.0
 
 signal locked
 signal validated
+signal active
 
 @onready var sequence_timer = $SequenceTimer
 @onready var animation_player = $AnimationPlayer
@@ -84,6 +85,7 @@ func update(action: ACTIONS, state):
 			animation_player.play("active")
 			sequence_timer.wait_time = delay_until_locked
 			sequence_timer.start()
+			active.emit()
 			return state
 		[ACTIONS.LOCK, STATES.ACTIVE]:
 			state.point_state = STATES.LOCKED

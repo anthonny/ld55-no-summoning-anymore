@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://bpuw5oxb5128u" path="res://assets/point/point-validated.png" id="8_23hev"]
 [ext_resource type="Texture2D" uid="uid://s33ou2skdagj" path="res://assets/point/point-locked.png" id="9_e0onh"]
 [ext_resource type="AudioStream" uid="uid://5lfelc6j87y0" path="res://assets/sounds/validate_point_2.wav" id="10_rue1h"]
-[ext_resource type="AudioStream" uid="uid://cn202l4gl0o8n" path="res://assets/sounds/locked.wav" id="11_twtnt"]
+[ext_resource type="AudioStream" uid="uid://dwngfk2h1d32h" path="res://assets/sounds/locked-2.wav" id="11_srsb0"]
 [ext_resource type="AudioStream" uid="uid://bg3xe078h1i64" path="res://assets/sounds/portal.wav" id="12_c0eb8"]
 [ext_resource type="AudioStream" uid="uid://dymqbeic07cy5" path="res://assets/sounds/portal-open.wav" id="13_63gky"]
 
@@ -76,8 +76,8 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_euq1u"]
 resource_name = "appears"
-length = 0.55
-step = 0.05
+length = 0.33
+step = 0.03
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -85,10 +85,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.03, 0.06, 0.09, 0.12, 0.15, 0.18, 0.21, 0.24, 0.27, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -401,13 +401,15 @@ libraries = {
 stream = ExtResource("10_rue1h")
 
 [node name="LockedPlayer" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("11_twtnt")
+stream = ExtResource("11_srsb0")
 
 [node name="PortalPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("12_c0eb8")
+volume_db = -8.0
 
 [node name="PortalOpenPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("13_63gky")
+volume_db = -3.0
 
 [connection signal="timeout" from="SequenceTimer" to="." method="_on_sequence_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

@@ -1,8 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://d3sbjty8hidwb"]
+[gd_scene load_steps=8 format=3 uid="uid://d3sbjty8hidwb"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_2cvxh"]
-[ext_resource type="Texture2D" uid="uid://tqv4wepruxya" path="res://assets/menu/ground.png" id="2_ysghk"]
+[ext_resource type="Texture2D" uid="uid://bvuxup3cwsjl0" path="res://assets/background/background.png" id="2_1a1sh"]
 [ext_resource type="LabelSettings" uid="uid://cvgrosjuhryw1" path="res://assets/upheaval_40_white.tres" id="3_1ntj2"]
+[ext_resource type="LabelSettings" uid="uid://dlkyopcvktx7e" path="res://assets/upheaval_40_grey.tres" id="3_r8c8s"]
+[ext_resource type="Texture2D" uid="uid://dquks0uynq4nj" path="res://assets/ground/ground.png" id="4_jkq5m"]
+[ext_resource type="LabelSettings" uid="uid://do6fyar0o5s8u" path="res://assets/upheaval_16_white.tres" id="5_ny0ms"]
+[ext_resource type="PackedScene" uid="uid://bc5ru62cegeoe" path="res://scenes/player/player.tscn" id="6_aylql"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -20,7 +24,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_ysghk")
+texture = ExtResource("2_1a1sh")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 125.0
+offset_top = 27.0
+offset_right = 523.0
+offset_bottom = 63.0
+text = "No more summoning"
+label_settings = ExtResource("3_r8c8s")
+horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -31,13 +44,83 @@ offset_left = -117.0
 offset_right = 117.0
 offset_bottom = 22.0
 grow_horizontal = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 12
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
 
 [node name="Label" type="Label" parent="MarginContainer"]
 layout_mode = 2
 text = "No more summoning"
 label_settings = ExtResource("3_1ntj2")
 horizontal_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -296.0
+offset_right = 320.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("4_jkq5m")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 121.0
+offset_top = 74.0
+offset_right = 416.0
+offset_bottom = 164.0
+size_flags_horizontal = 0
+theme_override_constants/separation = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "DASH: LEFT MOUSE BUTTON"
+label_settings = ExtResource("5_ny0ms")
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "JUMP: SPACE"
+label_settings = ExtResource("5_ny0ms")
+
+[node name="Label3" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "RESTART: ESCAPE"
+label_settings = ExtResource("5_ny0ms")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(462, 303)
+
+[node name="PlayerHolder" type="Node" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("6_aylql")]
+z_index = 1
+position = Vector2(319, 264)
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="JumpToStart" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 316.0
+offset_top = 315.0
+offset_right = 616.0
+offset_bottom = 375.0
+text = "JUMP ON TO START"
+label_settings = ExtResource("5_ny0ms")
+horizontal_alignment = 1
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="ResetTimer" to="." method="_on_reset_timer_timeout"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

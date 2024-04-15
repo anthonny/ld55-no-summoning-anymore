@@ -2,7 +2,7 @@
 
 [ext_resource type="LabelSettings" uid="uid://bkcdj1xgqjcda" path="res://assets/upheaval_12_white.tres" id="1_4te5w"]
 [ext_resource type="Script" path="res://scenes/game-ui/game-ui.gd" id="1_07t26"]
-[ext_resource type="LabelSettings" uid="uid://do6fyar0o5s8u" path="res://assets/upheaval_16_white.tres" id="2_jdvjh"]
+[ext_resource type="LabelSettings" uid="uid://dvxcvch4pxyfs" path="res://assets/upheaval_24_white.tres" id="3_p3883"]
 
 [node name="GameUI" type="Control"]
 layout_mode = 3
@@ -29,31 +29,38 @@ theme_override_constants/margin_bottom = 24
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+theme_override_constants/separation = 8
 
-[node name="HighScore" type="Label" parent="MC/VBoxContainer"]
+[node name="VBHS" type="VBoxContainer" parent="MC/VBoxContainer"]
+layout_mode = 2
+
+[node name="HighScore" type="Label" parent="MC/VBoxContainer/VBHS"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "HIGH SCORE"
 label_settings = ExtResource("1_4te5w")
 
-[node name="HighScoreValue" type="Label" parent="MC/VBoxContainer"]
+[node name="HighScoreValue" type="Label" parent="MC/VBoxContainer/VBHS"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "0
 "
-label_settings = ExtResource("2_jdvjh")
+label_settings = ExtResource("1_4te5w")
 
-[node name="Score" type="Label" parent="MC/VBoxContainer"]
+[node name="VBS" type="VBoxContainer" parent="MC/VBoxContainer"]
+layout_mode = 2
+
+[node name="Score" type="Label" parent="MC/VBoxContainer/VBS"]
 layout_mode = 2
 size_flags_horizontal = 8
 text = "SCORE"
-label_settings = ExtResource("1_4te5w")
+label_settings = ExtResource("3_p3883")
 
-[node name="ScoreValue" type="Label" parent="MC/VBoxContainer"]
+[node name="ScoreValue" type="Label" parent="MC/VBoxContainer/VBS"]
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
 text = "0
 "
-label_settings = ExtResource("2_jdvjh")
+label_settings = ExtResource("3_p3883")
