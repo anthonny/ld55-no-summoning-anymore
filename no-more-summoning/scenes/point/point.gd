@@ -1,7 +1,7 @@
 extends Area2D
 
 enum STATES {HIDDEN, APPEARING, IDLE_STEP_1, STEP_1, IDLE_STEP_2, STEP_2, IDLE_STEP_3, STEP_3, IDLE_STEP_4, STEP_4, ACTIVE, VALIDATED, LOCKED}
-enum ACTIONS {TICK, APPEARS, DELAY_RUN_STEP_1, RUN_STEP_1, DELAY_RUN_STEP_2, RUN_STEP_2, DELAY_RUN_STEP_3, RUN_STEP_3, DELAY_RUN_STEP_4, RUN_STEP_4, RUN_ACTIVE, EVALUATE_RESULT, RUN_LOCKED, VALIDATE}
+enum ACTIONS {TICK, APPEARS, DELAY_RUN_STEP_1, RUN_STEP_1, DELAY_RUN_STEP_2, RUN_STEP_2, DELAY_RUN_STEP_3, RUN_STEP_3, DELAY_RUN_STEP_4, RUN_STEP_4, RUN_ACTIVE, LOCK, VALIDATE}
 
 @export var pop_delay: float
 @export var interval: float = 0.20 #0.02
@@ -36,8 +36,8 @@ func _process(delta):
 	state = update(ACTIONS.TICK, state)
 
 func update(action: ACTIONS, state):
-	if (action != ACTIONS.TICK):
-		print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.point_state])])
+	#if (action != ACTIONS.TICK):
+		#print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.point_state])])
 	match [action, state.point_state]:
 		[ACTIONS.APPEARS, STATES.HIDDEN]:
 			state.point_state = STATES.APPEARING
@@ -85,7 +85,7 @@ func update(action: ACTIONS, state):
 			sequence_timer.wait_time = locked_delay
 			sequence_timer.start()
 			return state
-		[ACTIONS.EVALUATE_RESULT, STATES.ACTIVE]:
+		[ACTIONS.LOCK, STATES.ACTIVE]:
 			state.point_state = STATES.LOCKED
 			animation_player.play("locked")
 			locked_player.play()
@@ -117,7 +117,7 @@ func _on_animation_finished(anim_name):
 			return state
 
 func _on_sequence_timer_timeout():
-	var next_action = ACTIONS.RUN_LOCKED if state.point_state == STATES.LOCKED else next_action_from_state(state)
+	var next_action = ACTIONS.LOCK if state.point_state == STATES.LOCKED else next_action_from_state(state)
 	state = update(next_action, state)
 
 func next_action_from_state(state) -> ACTIONS:
@@ -135,9 +135,10 @@ func next_action_from_state(state) -> ACTIONS:
 		STATES.IDLE_STEP_4:
 			return ACTIONS.RUN_STEP_4
 		STATES.ACTIVE:
-			return ACTIONS.EVALUATE_RESULT
+			return ACTIONS.LOCK
 		_ :
 			return ACTIONS.TICK
 
 func validate():
 	state = update(ACTIONS.VALIDATE, state)
+

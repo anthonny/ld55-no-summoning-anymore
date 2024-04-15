@@ -30,3 +30,9 @@ build_mode = 1
 polygon = PackedVector2Array(138, 113, 109, 262, 532, 264, 502, 113, 536, 113, 565, 289, 75, 288, 88, 113)
 
 [node name="Markers" type="Node" parent="."]
+
+[node name="LevelFinishedTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="timeout" from="LevelFinishedTimer" to="." method="_on_level_finished"]

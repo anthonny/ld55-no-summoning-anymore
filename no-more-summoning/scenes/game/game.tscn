@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://dq8niq3fjocat"]
+[gd_scene load_steps=6 format=3 uid="uid://dq8niq3fjocat"]
 
 [ext_resource type="Texture2D" uid="uid://bvuxup3cwsjl0" path="res://assets/background/background.png" id="1_inctd"]
 [ext_resource type="Script" path="res://scenes/game/game.gd" id="1_u4cb3"]
 [ext_resource type="PackedScene" uid="uid://bc5ru62cegeoe" path="res://scenes/player/player.tscn" id="2_x670j"]
 [ext_resource type="PackedScene" uid="uid://b3diccjtwi5fe" path="res://scenes/game-ui/game-ui.tscn" id="4_234fp"]
+[ext_resource type="PackedScene" uid="uid://btpr0lh57qlmw" path="res://scenes/shake_camera/shake_camera.tscn" id="5_2d4i7"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_u4cb3")
@@ -29,3 +30,8 @@ position = Vector2(322, 182)
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GameUI" parent="CanvasLayer" instance=ExtResource("4_234fp")]
+
+[node name="ShakeCamera" parent="." instance=ExtResource("5_2d4i7")]
+anchor_mode = 0
+random_strength_base = 12.0
+shake_fade = 8.0

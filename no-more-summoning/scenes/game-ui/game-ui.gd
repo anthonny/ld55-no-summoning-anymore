@@ -10,7 +10,6 @@ func _ready():
 func _process(delta):
 	pass
 
-
 func _handle_score_updated():
 	var scores = LevelManager.get_scores()
 	score_value.text = str(scores.score)

@@ -25,19 +25,23 @@ func _ready():
 
 	SignalManager.point_validated.connect(func(): _add_to_score(50) )
 	SignalManager.point_locked.connect(func(): _add_to_score(-20) )
-	SignalManager.level_validated.connect(_handle_level_validated)
+	SignalManager.level_won.connect(_handle_level_won)
+	SignalManager.level_semi_won.connect(_handle_level_semi_won)
 	SignalManager.level_lost.connect(_handle_level_lost)
 
 
 func _add_to_score(score):
 	_score += score
+	_score = clampf(_score, 0, absf(_score))
 	if _score > _scores.high_score:
 		_scores.high_score = _score
 		save_to_disc()
 	scores_updated.emit()
 
-func _handle_level_validated():
+func _handle_level_won():
 	_add_to_score(200)
+	SignalManager.level_changed.emit()
+func _handle_level_semi_won():
 	SignalManager.level_changed.emit()
 
 func _handle_level_lost():

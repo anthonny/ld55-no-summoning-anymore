@@ -31,8 +31,8 @@ func _physics_process(delta):
 
 
 func update(action: ACTIONS, state):
-	if (action != ACTIONS.TICK):
-		print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state])])
+	#if (action != ACTIONS.TICK):
+		#print("Action: %s, State: %s" % [str(ACTIONS.keys()[action]), str(STATES.keys()[state.player_state])])
 	match [action, state.player_state]:
 		[ACTIONS.STAND, STATES.LEFT_DASHING]:
 			state.player_state = STATES.STANDING
@@ -134,7 +134,7 @@ func handle_tick(state):
 func handle_dashing(state):
 	var velocity = state.current_direction * dash_speed
 	var new_position = position + velocity * state.delta
-	if (new_position.distance_to(state.targeted_position) + 16 < position.distance_to(state.targeted_position)):
+	if (new_position.distance_to(state.targeted_position)  < position.distance_to(state.targeted_position)):
 		position = new_position
 	else:
 		position = state.targeted_position
@@ -152,7 +152,7 @@ func handle_dash_action(state):
 	state.targeted_position = gmp
 	state.current_direction = state.targeted_position - position
 
-	if (state.current_direction.length() < 16.0):
+	if (state.current_direction.length() <= 0):
 		state.player_state = STATES.STANDING
 		return state
 
