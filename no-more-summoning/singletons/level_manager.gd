@@ -17,7 +17,7 @@ var _delay_until_points_start: float = 1.5 # 1.0
 var _delay_between_points_steps: float = 0.5 # 1.0
 var _delay_until_point_lock: float = 1.5 #1.5
 
-var _level_index: int = 6
+var _level_index: int = 2
 var _all_levels = []
 var _levels = []
 var _score = 0
