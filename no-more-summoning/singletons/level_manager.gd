@@ -17,7 +17,7 @@ var _delay_until_points_start: float = 1.5 # 1.0
 var _delay_between_points_steps: float = 0.5 # 1.0
 var _delay_until_point_lock: float = 1.5 #1.5
 
-var _level_index: int = 2
+var _level_index: int = 6
 var _all_levels = []
 var _levels = []
 var _score = 0
@@ -57,7 +57,6 @@ func _handle_level_won():
 	SignalManager.level_won_streak.emit(_level_won_streak)
 
 func _handle_level_semi_won():
-	_level_won_streak = 0
 	SignalManager.level_changed.emit()
 
 func _handle_level_lost():
@@ -79,7 +78,7 @@ func load_levels(level_index: int):
 			_delay_until_level_finished = 1.0
 			_delay_until_points_start = 1.4
 			_delay_between_points_steps = 0.5
-			_delay_until_point_lock = 1.4
+			_delay_until_point_lock = 1.5
 		4:
 			_delay_until_level_finished = 1.0
 			_delay_until_points_start = 1.3
@@ -89,22 +88,22 @@ func load_levels(level_index: int):
 			_delay_until_level_finished = 1.0
 			_delay_until_points_start = 1.2
 			_delay_between_points_steps = 0.5
-			_delay_until_point_lock = 1.3
+			_delay_until_point_lock = 1.4
 		6:
 			_delay_until_level_finished = 1.0
 			_delay_until_points_start = 1.1
-			_delay_between_points_steps = 0.4
+			_delay_between_points_steps = 0.45
 			_delay_until_point_lock = 1.3
 		7:
 			_delay_until_level_finished = 1.0
 			_delay_until_points_start = 1.0
-			_delay_between_points_steps = 0.4
-			_delay_until_point_lock = 1.2
+			_delay_between_points_steps = 0.45
+			_delay_until_point_lock = 1.3
 		_:
-			_delay_until_level_finished = 0.4
-			_delay_until_points_start = 0.9
-			_delay_between_points_steps = 0.4
-			_delay_until_point_lock = 1.2
+			_delay_until_level_finished = 1.0
+			_delay_until_points_start = 1.0
+			_delay_between_points_steps = 0.45
+			_delay_until_point_lock = 1.3
 
 
 	var dir = DirAccess.open("%s/levels%s" % [LEVEL_BASE_PATH, level_index])

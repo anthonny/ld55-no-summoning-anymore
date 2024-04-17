@@ -17,7 +17,6 @@
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0yvef"]
 radius = 3.0
-height = 26.0
 
 [sub_resource type="Animation" id="Animation_ksm48"]
 length = 0.001

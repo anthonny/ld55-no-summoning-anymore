@@ -15,8 +15,8 @@
 [ext_resource type="AudioStream" uid="uid://dymqbeic07cy5" path="res://assets/sounds/portal-open.wav" id="13_63gky"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_xeuwj"]
-radius = 5.0
-height = 28.0
+radius = 7.0
+height = 46.0
 
 [sub_resource type="Animation" id="Animation_5tcdx"]
 length = 0.001
@@ -399,9 +399,11 @@ libraries = {
 
 [node name="ValidatePlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("10_rue1h")
+volume_db = -1.0
 
 [node name="LockedPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("11_srsb0")
+volume_db = -1.0
 
 [node name="PortalPlayer" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("12_c0eb8")
